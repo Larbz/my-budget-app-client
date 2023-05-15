@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { logout } from "../services/auth";
 import { Logout } from "../interfaces/logout";
+import { Link, Navigate } from "react-router-dom";
+import { BASE } from "../config/path";
 
 interface IProfile {
     username: string;
@@ -14,15 +16,15 @@ interface IProfile {
 
 export const Profile = () => {
     const { authState, setAuth } = useContext(AuthContext);
-    const { isAuth } = authState;
+    const { isAuth,csrf } = authState;
     const [log,setLog]=useState<Logout>();
-    // console.log(authState);
     const [profile, setProfile] = useState<IProfile>();
     const getProfileInfo = async () => {
         const options = {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${isAuth}`
+                "Authorization": `Bearer ${isAuth}`,
+                "CSRF":csrf
             },
             withCredentials: true,
         };
@@ -34,7 +36,7 @@ export const Profile = () => {
     };
 
     const handleLogout=()=>{
-        logout(isAuth).then(res=>{setLog(res);setAuth("")});
+        logout(isAuth,csrf).then(res=>{setLog(res);setAuth("","")});
     }
 
     useEffect(() => {
@@ -43,7 +45,7 @@ export const Profile = () => {
     
     return (
         <div>
-            <button onClick={handleLogout}>logout</button>
+            <Link to={BASE} onClick={handleLogout}>logout</Link>
             <h1>Hola {profile?.name}!</h1>
             <ul>
                 <li>{profile?.username}</li>

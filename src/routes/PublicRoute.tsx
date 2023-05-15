@@ -6,7 +6,8 @@ import { HOME } from "../config/path";
 const PublicRoute = () => {
   const {authState} =useContext(AuthContext);
   const {isAuth}=authState;
-
+  console.log("public")
+  console.log(isAuth);
   if (isAuth) {
     return <Navigate to={HOME} />;
   }

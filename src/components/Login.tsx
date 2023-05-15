@@ -28,8 +28,9 @@ export const Login = () => {
             console.log(response.headers);
         }
         if (response.status == 200) {
-            setAuth(response.headers.authorization);
+            setAuth(response.headers.authorization,response.data.csrf);
             window.localStorage.setItem("isAuth",response.headers.authorization);
+            window.localStorage.setItem("csrf",response.data.csrf);
         } else console.log("wrong credentials");
     };
 

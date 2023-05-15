@@ -1,8 +1,8 @@
 import axios from "axios"
-import { Category } from "../interfaces/categories"
+import { Transaction } from "../interfaces/transaction"
 
-export const getCategories=async (token:string,csrf:string):Promise<Category[]> =>{
-    const basePath=`${import.meta.env.VITE_BACKEND_URL_CATEGORIES}`
+export const getTransactions=async (token:string,csrf:string):Promise<Transaction[]> =>{
+    const basePath=`${import.meta.env.VITE_BACKEND_URL_TRANSACTIONS}`
     const options = {
         headers: {
             Accept:"application/json",
@@ -17,5 +17,4 @@ export const getCategories=async (token:string,csrf:string):Promise<Category[]> 
         options
     );
     return response.data;
-    
 }
