@@ -1,4 +1,4 @@
 export interface Auth{
-    isAuth:string;
-    csrf:string;
+    isAuth:string|null;
+    csrf:string|null;
 }

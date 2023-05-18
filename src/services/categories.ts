@@ -1,7 +1,7 @@
 import axios from "axios"
 import { Category } from "../interfaces/categories"
 
-export const getCategories=async (token:string,csrf:string):Promise<Category[]> =>{
+export const getCategories=async (token:string|null,csrf:string|null):Promise<Category[]> =>{
     const basePath=`${import.meta.env.VITE_BACKEND_URL_CATEGORIES}`
     const options = {
         headers: {

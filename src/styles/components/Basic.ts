@@ -4,6 +4,7 @@ export const Main = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 220px 1fr;
+    overflow: hidden;
 `;
 
 export const Table = styled.table`
@@ -12,6 +13,7 @@ export const Table = styled.table`
     padding-top: 20px;
     && tr th{
         text-align:left;
+        font-size: 1.2rem;
     }
 `
 
@@ -19,9 +21,14 @@ export const TableRow=styled.tr`
     &:nth-child(2n){
         background-color: gray;
     }
-    padding: 0;
+    font-size: .8rem;
 `
 
-export const TableData=styled.td`
-    padding: 0;
+export const TableData=styled.td<{center?:boolean}>`
+    ${(props)=>
+        props.center && css`
+            text-align:center;
+            cursor: pointer;
+        `    
+}    
 `

@@ -4,9 +4,13 @@ export const SidebarBox = styled.div`
     width: 220px;
     height: 100%;
     background-color: #242424;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
 `;
 export const SidebarUl = styled.ul`
-    padding: 10px;
+    /* padding: 10px; */
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -31,24 +35,20 @@ export const SidebarLi = styled.li<{ active: boolean }>`
         props.active &&
         css`
             &:nth-child(1) ~ .indicator {
-                transform: translateY(-112px);
-            }
-            &:nth-child(2) ~ .indicator {
-                transform: translateY(-56px);
-            }
-            &:nth-child(3) ~ .indicator {
                 transform: translateY(0px);
             }
+            &:nth-child(2) ~ .indicator {
+                transform: translateY(60px);
+            }
+            &:nth-child(3) ~ .indicator {
+                transform: translateY(120px);
+            }
             &:nth-child(4) ~ .indicator {
-                transform: translateY(56px);
+                transform: translateY(180px);
             }
             &:nth-child(5) ~ .indicator {
-                transform: translateY(112px);
+                transform: translateY(240px);
             }
-            /* &::after {
-                background-color: white;
-                transition: 0.5s;
-            } */
         `}
 `;
 
@@ -57,7 +57,7 @@ export const Indicator = styled.div`
     height: 36px;
     background-color: white;
     position: absolute;
-    right: 20px;
+    top:12px;
+    right: 0px;
     transition: 0.5s;
-    /* transform: translateY(-112px); */
 `;

@@ -7,19 +7,32 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CATEGORIES, HOME, TRANSACTIONS } from "../config/path";
+import {
+    BASE,
+    CATEGORIES,
+    HOME,
+    RECURRENT_PAYMENTS,
+    SETTINGS,
+    TRANSACTIONS,
+} from "../config/path";
+import { useDispatch } from "../context";
+import { ActionTypes } from "../context/AuthReducer";
 import {
     Indicator,
     SidebarBox,
     SidebarLi,
     SidebarUl,
 } from "../styles/components/Sidebar";
+// import { Logout } from "../interfaces/logout";
 
 export interface Props {
     active: boolean;
 }
 
 export const Sidebar = () => {
+    const dispatch = useDispatch();
+    // const { isAuth, csrf } = authState;
+    // const [log,setLog]=useState<Logout>();
     const location = useLocation();
     const navigate = useNavigate();
     const changeLocation = (path: string) => {
@@ -27,6 +40,13 @@ export const Sidebar = () => {
     };
     const check = (path: string) => {
         return location.pathname == path;
+    };
+    const handleLogout = () => {
+        // logout(isAuth, csrf).then(res=>{setLog(res);setAuth("","")});
+        dispatch({
+            type: ActionTypes.LOGOUT,
+        });
+        navigate(BASE);
     };
     return (
         <SidebarBox>
@@ -51,7 +71,6 @@ export const Sidebar = () => {
                             />
                         </div>
                         <span>Home</span>
-                        {/* <Indicator active={check(HOME) || false} /> */}
                     </div>
                 </SidebarLi>
                 <SidebarLi
@@ -72,7 +91,10 @@ export const Sidebar = () => {
                         <span>Transactions</span>
                     </div>
                 </SidebarLi>
-                <SidebarLi onClick={() => changeLocation(HOME)}>
+                <SidebarLi
+                    onClick={() => changeLocation(RECURRENT_PAYMENTS)}
+                    active={check(RECURRENT_PAYMENTS) || false}
+                >
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <div
                             style={{
@@ -94,7 +116,6 @@ export const Sidebar = () => {
                 <SidebarLi
                     onClick={() => changeLocation(CATEGORIES)}
                     active={check(CATEGORIES) || false}
-                    distance={3}
                 >
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <div
@@ -115,7 +136,10 @@ export const Sidebar = () => {
                         {/* <Indicator active={check(CATEGORIES) || false} /> */}
                     </div>
                 </SidebarLi>
-                <SidebarLi onClick={() => changeLocation(HOME)}>
+                <SidebarLi
+                    onClick={() => changeLocation(SETTINGS)}
+                    active={check(SETTINGS) || false}
+                >
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <div
                             style={{
@@ -136,6 +160,9 @@ export const Sidebar = () => {
                 </SidebarLi>
                 <Indicator className="indicator" />
             </SidebarUl>
+            <div>
+                <button onClick={handleLogout}>Logout</button>
+            </div>
         </SidebarBox>
     );
 };

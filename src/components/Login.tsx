@@ -2,10 +2,13 @@ import axios from "axios";
 import { ChangeEvent, useContext, useState } from "react";
 import { LoginForm } from "../styles/components/Form";
 import { Navigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import {AuthContext } from "../context/AuthContext";
+import { ActionTypes } from "../context/AuthReducer";
+import { useDispatch } from "../context";
 export const Login = () => {
-    const {authState,setAuth} =useContext(AuthContext);
-    const {isAuth}=authState;
+    const {authState} =useContext(AuthContext);
+    const {isAuth,csrf}=authState;
+    const dispatch = useDispatch();
     console.log(isAuth);
     // const [email, setEmail] = useState<string>("");
     // const [password, setPassword] = useState<string>("");
@@ -28,9 +31,15 @@ export const Login = () => {
             console.log(response.headers);
         }
         if (response.status == 200) {
-            setAuth(response.headers.authorization,response.data.csrf);
-            window.localStorage.setItem("isAuth",response.headers.authorization);
-            window.localStorage.setItem("csrf",response.data.csrf);
+            // setAuth(response.headers.authorization,response.data.csrf);
+            dispatch({
+                type:ActionTypes.LOGIN,
+                payload:{
+                    isAuth:response.headers.authorization,
+                    csrf:response.data.csrf
+                }
+            })
+
         } else console.log("wrong credentials");
     };
 
@@ -44,7 +53,7 @@ export const Login = () => {
 
     return (
         <>
-        {!isAuth?
+        {(!isAuth||!csrf)?
             <LoginForm onSubmit={handleSubmit}>
                 <input type="email" name="email" onChange={handleChange} id="" />
                 <input type="password" name="password" onChange={handleChange} />

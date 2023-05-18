@@ -12,7 +12,7 @@ export const Categories = () => {
   useEffect(()=>{
     getCategories(isAuth,csrf).then(resp=>setCategories(resp));
     // console.log(categories);
-  },[])
+  },[isAuth,csrf])
 
   return (
     <CategoriesBox>

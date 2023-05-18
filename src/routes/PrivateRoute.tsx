@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-import { BASE, LOGIN } from "../config/path";
+import { BASE } from "../config/path";
 import { AuthContext } from "../context/AuthContext";
 
 
