@@ -1,14 +1,31 @@
 import { Category } from "./categories";
 
+export interface TransactionResponse {
+    res: boolean;
+    totalResults: number;
+    currentPage: number;
+    totalPages: number;
+    data: Transaction[];
+}
 export interface Transaction {
     _id: string;
     nameOfTransaction: string;
     amount: number;
     date: string;
     typeOfTransaction: string;
-    categoryId: Category;
+    category: Category;
     userId: string;
-    // format():string;
+    day: number;
+    month: number;
+    year: number;
+}
+
+export interface TransactionsProviderProps {
+    transactions: Transaction[];
+    totalResults: number;
+    currentPage: number;
+    totalPages: number;
+    loadingTransactions:boolean;
 }
 
 // export class Transaction implements ITransaction {

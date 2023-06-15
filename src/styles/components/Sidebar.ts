@@ -3,7 +3,7 @@ import styled, { css, keyframes } from "styled-components";
 export const SidebarBox = styled.div`
     width: 220px;
     height: 100%;
-    background-color: #242424;
+    background-color:rgba(255, 255, 255,0.01);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -50,6 +50,9 @@ export const SidebarLi = styled.li<{ active: boolean }>`
                 transform: translateY(240px);
             }
         `}
+    &:hover{
+        background-color:red;
+    }
 `;
 
 export const Indicator = styled.div`

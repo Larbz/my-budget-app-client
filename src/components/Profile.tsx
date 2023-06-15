@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { logout } from "../services/auth";
-import { Logout } from "../interfaces/logout";
 import { Link, Navigate } from "react-router-dom";
 import { BASE } from "../config/path";
+import { AuthContext } from "../context/Auth/AuthContext";
+import { Logout } from "../interfaces/logout";
+import { logout } from "../services/auth";
 
 interface IProfile {
     username: string;
@@ -15,16 +15,16 @@ interface IProfile {
 }
 
 export const Profile = () => {
-    const { authState, setAuth } = useContext(AuthContext);
-    const { isAuth,csrf } = authState;
-    const [log,setLog]=useState<Logout>();
+    const { authState } = useContext(AuthContext);
+    const { jwt, csrf } = authState;
+    const [log, setLog] = useState<Logout>();
     const [profile, setProfile] = useState<IProfile>();
     const getProfileInfo = async () => {
         const options = {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${isAuth}`,
-                "CSRF":csrf
+                Authorization: `Bearer ${jwt}`,
+                CSRF: csrf,
             },
             withCredentials: true,
         };
@@ -35,17 +35,21 @@ export const Profile = () => {
         setProfile(response.data.user);
     };
 
-    const handleLogout=()=>{
-        logout(isAuth,csrf).then(res=>{setLog(res);setAuth("","")});
-    }
+    const handleLogout = () => {
+        logout().then((res) => {
+            setLog(res);
+        });
+    };
 
     useEffect(() => {
         getProfileInfo();
     }, []);
-    
+
     return (
         <div>
-            <Link to={BASE} onClick={handleLogout}>logout</Link>
+            <Link to={BASE} onClick={handleLogout}>
+                logout
+            </Link>
             <h1>Hola {profile?.name}!</h1>
             <ul>
                 <li>{profile?.username}</li>

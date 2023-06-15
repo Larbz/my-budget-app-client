@@ -1,4 +1,5 @@
-export interface Auth{
-    isAuth:string|null;
-    csrf:string|null;
+export interface Auth {
+    jwt: string | null;
+    csrf: string | null;
+    refreshToken:string|null;
 }

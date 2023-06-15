@@ -6,13 +6,17 @@ interface props {
 }
 
 export const AuthProvider = ({ children }: props) => {
-    const [authState,dispatch] = useReducer(authReducer, INITIAL_STATE);
+    const [authState, dispatch] = useReducer(authReducer, INITIAL_STATE);
 
     // const setAuth = (isAuth: string,csrf:string) => {
     //     dispatch({ type: "login", payload: {isAuth:isAuth,csrf:csrf}});
     // };
 
-    return <AuthContext.Provider value={{ authState,dispatch}}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={{ authState, dispatch }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 // export const useAuth = ()=>useContext(AuthContext).authState

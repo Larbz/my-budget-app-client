@@ -8,15 +8,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-    BASE,
     CATEGORIES,
     HOME,
+    LOGIN,
     RECURRENT_PAYMENTS,
     SETTINGS,
     TRANSACTIONS,
 } from "../config/path";
-import { useDispatch } from "../context";
-import { ActionTypes } from "../context/AuthReducer";
+import { useAuth, useAuthDispatch } from "../context/Auth";
+import { ActionTypes } from "../context/Auth/AuthReducer";
+import { logout } from "../services/auth";
 import {
     Indicator,
     SidebarBox,
@@ -30,8 +31,8 @@ export interface Props {
 }
 
 export const Sidebar = () => {
-    const dispatch = useDispatch();
-    // const { isAuth, csrf } = authState;
+    const dispatch = useAuthDispatch();
+    // const { jwt, csrf } = useAuth();
     // const [log,setLog]=useState<Logout>();
     const location = useLocation();
     const navigate = useNavigate();
@@ -41,12 +42,12 @@ export const Sidebar = () => {
     const check = (path: string) => {
         return location.pathname == path;
     };
-    const handleLogout = () => {
-        // logout(isAuth, csrf).then(res=>{setLog(res);setAuth("","")});
+    const handleLogout = async () => {
+        await logout();
         dispatch({
             type: ActionTypes.LOGOUT,
         });
-        navigate(BASE);
+        navigate(LOGIN);
     };
     return (
         <SidebarBox>

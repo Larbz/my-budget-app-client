@@ -1,20 +1,17 @@
 import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-import { BASE } from "../config/path";
-import { AuthContext } from "../context/AuthContext";
-
+import { BASE, LOGIN } from "../config/path";
+import { AuthContext } from "../context/Auth/AuthContext";
 
 const PrivateRoute = () => {
-  const {authState} =useContext(AuthContext);
-  const {isAuth}=authState;
-  console.log(isAuth)
-  console.log("private")
-  if (!isAuth) {
-    console.log("none")
-    return <Navigate to={BASE} />;
-  }
-  return <Outlet />;
+    const { authState } = useContext(AuthContext);
+    const { jwt } = authState;
+    console.log("private");
+    if (!jwt) {
+        return <Navigate to={LOGIN} />;
+    }
+    return <Outlet />;
 };
 
 export default PrivateRoute;
