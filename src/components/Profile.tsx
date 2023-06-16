@@ -29,7 +29,7 @@ export const Profile = () => {
             withCredentials: true,
         };
         const response = await axios.get(
-            "http://localhost:3000/api/auth/profile",
+            "http://192.168.18.3:3000/api/auth/profile",
             options
         );
         setProfile(response.data.user);

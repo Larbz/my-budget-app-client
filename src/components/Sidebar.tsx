@@ -21,7 +21,10 @@ import { logout } from "../services/auth";
 import {
     Indicator,
     SidebarBox,
+    SidebarIconGroup,
     SidebarLi,
+    SidebarLiGroup,
+    SidebarSpan,
     SidebarUl,
 } from "../styles/components/Sidebar";
 // import { Logout } from "../interfaces/logout";
@@ -56,108 +59,73 @@ export const Sidebar = () => {
                     onClick={() => changeLocation(HOME)}
                     active={check(HOME) || false}
                 >
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <div
-                            style={{
-                                width: "50px",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
+                    <SidebarLiGroup>
+                        <SidebarIconGroup>
                             <FontAwesomeIcon
                                 icon={faHouse}
                                 style={{ color: "#ffffff" }}
                                 size="2xl"
                             />
-                        </div>
-                        <span>Home</span>
-                    </div>
+                        </SidebarIconGroup>
+                        <SidebarSpan>Home</SidebarSpan>
+                    </SidebarLiGroup>
                 </SidebarLi>
                 <SidebarLi
                     onClick={() => changeLocation(TRANSACTIONS)}
                     active={check(TRANSACTIONS) || false}
                 >
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <div
-                            style={{
-                                width: "50px",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
+                    <SidebarLiGroup>
+                        <SidebarIconGroup>
                             <FontAwesomeIcon icon={faMoneyBillTransfer} size="2xl" />
-                        </div>
-                        <span>Transactions</span>
-                    </div>
+                        </SidebarIconGroup>
+                        <SidebarSpan>Transactions</SidebarSpan>
+                    </SidebarLiGroup>
                 </SidebarLi>
                 <SidebarLi
                     onClick={() => changeLocation(RECURRENT_PAYMENTS)}
                     active={check(RECURRENT_PAYMENTS) || false}
                 >
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <div
-                            style={{
-                                width: "50px",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
+                    <SidebarLiGroup>
+                        <SidebarIconGroup>
                             <FontAwesomeIcon
                                 icon={faCircleDollarToSlot}
                                 style={{ color: "#ffffff" }}
                                 size="2xl"
                             />
-                        </div>
-                        <span>Gastos Recurrentes</span>
-                    </div>
+                        </SidebarIconGroup>
+                        <SidebarSpan>Gastos Recurrentes</SidebarSpan>
+                    </SidebarLiGroup>
                 </SidebarLi>
                 <SidebarLi
                     onClick={() => changeLocation(CATEGORIES)}
                     active={check(CATEGORIES) || false}
                 >
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <div
-                            style={{
-                                width: "50px",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
+                    <SidebarLiGroup>
+                        <SidebarIconGroup>
                             <FontAwesomeIcon
                                 icon={faTags}
                                 style={{ color: "#ffffff" }}
                                 size="2xl"
                             />
-                        </div>
-                        <span>Categories</span>
+                        </SidebarIconGroup>
+                        <SidebarSpan>Categories</SidebarSpan>
                         {/* <Indicator active={check(CATEGORIES) || false} /> */}
-                    </div>
+                    </SidebarLiGroup>
                 </SidebarLi>
                 <SidebarLi
                     onClick={() => changeLocation(SETTINGS)}
                     active={check(SETTINGS) || false}
                 >
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <div
-                            style={{
-                                width: "50px",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
+                    <SidebarLiGroup>
+                        <SidebarIconGroup>
                             <FontAwesomeIcon
                                 icon={faGear}
                                 style={{ color: "#ffffff" }}
                                 size="2xl"
                             />
-                        </div>
-                        <span>Ajustes</span>
-                    </div>
+                        </SidebarIconGroup>
+                        <SidebarSpan>Ajustes</SidebarSpan>
+                    </SidebarLiGroup>
                 </SidebarLi>
                 <Indicator className="indicator" />
             </SidebarUl>

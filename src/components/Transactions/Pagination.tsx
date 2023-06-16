@@ -1,18 +1,19 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTransactions, useTransactionsDispatch } from "../../context/Transactions";
-import { CirclePagination, InputPagination } from "../../styles/components/Transactions";
 import { TransactionTypes } from "../../context/Transactions/TransactionsReducer";
+import { CirclePagination, InputPagination } from "../../styles/components/Transactions";
 
 interface MyProps {
+    page: number;
     setPage: Dispatch<SetStateAction<number>>;
 }
 
-export const Pagination = ({setPage }: MyProps) => {
+export const Pagination = ({ page, setPage }: MyProps) => {
     const { currentPage, totalPages } = useTransactions();
-    const [page, setThisPage] = useState<number>(1);
+    const [altPage, setThisPage] = useState<number>(page);
     const dispatch = useTransactionsDispatch();
     // setThisPage(currentPage);
-    console.log(page);
+    // console.log(page);
     const showInPagination = 3; // only works for odd numbers greater than 1
     const limit = showInPagination - 1;
     const adder = Math.floor(showInPagination / 2);
@@ -58,34 +59,67 @@ export const Pagination = ({setPage }: MyProps) => {
         }
     }
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const input = event.target.value;
-        const numericValue = input.replace(/\D/g, "");
-        const page = parseInt(numericValue);
+        const input = event.target.value as unknown as number;
+        // const numericValue = input.replace(/\D/g, "");
+        // const page = parseInt(numericValue);
         // const page = event.target.value as unknown as number;
-        if (page < 1) {
+        if (input < 1) {
             setThisPage(1);
-        } else if (page > totalPages) {
+        } else if (input > totalPages) {
             setThisPage(totalPages);
         } else {
-            setThisPage(parseInt(numericValue));
+            setThisPage(input);
         }
     };
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setPage(page as number);
-        // dispatch({type:TransactionTypes.SET_CURRENT_PAGE,payload:{currentPage:page as number}})
+        setPage(altPage as number);
+        dispatch({
+            type: TransactionTypes.SET_CURRENT_PAGE,
+            payload: { currentPage: altPage as number },
+        });
     };
     const getInputWidth = (value: number): number => {
         const numberToString = value.toString();
         return numberToString.length;
     };
 
+    useEffect(() => {
+        setThisPage(page);
+    }, [currentPage]);
 
-    if(!currentPage){
-        return(
-            <p>...</p>
-        )
+    if (!currentPage) {
+        return (
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    gap: "30px",
+                }}
+            >
+                <div
+                    style={{
+                        display: "flex",
+                        gap: "10px",
+                        alignItems: "center",
+                    }}
+                >
+                    <CirclePagination selected={true}>1</CirclePagination>
+                </div>
+                <form onSubmit={onSubmit}>
+                    <InputPagination
+                        type="text"
+                        inputMode="numeric"
+                        value={page}
+                        onChange={handleChange}
+                        width={getInputWidth(page)}
+                        disabled={true}
+                    />
+                </form>
+            </div>
+        );
     }
 
     return (
@@ -112,7 +146,12 @@ export const Pagination = ({setPage }: MyProps) => {
                             onClick={() => {
                                 setPage(it as number);
                                 setThisPage(it as number);
+                                dispatch({
+                                    type: TransactionTypes.SET_CURRENT_PAGE,
+                                    payload: { currentPage: it as number },
+                                });
                             }}
+                            selectable={it === "..."}
                         >
                             {it}
                         </CirclePagination>
@@ -121,11 +160,11 @@ export const Pagination = ({setPage }: MyProps) => {
             </div>
             <form onSubmit={onSubmit}>
                 <InputPagination
-                    type="text"
+                    type="number"
                     inputMode="numeric"
-                    value={page}
+                    value={altPage}
                     onChange={handleChange}
-                    width={getInputWidth(page)}
+                    width={getInputWidth(altPage)}
                 />
             </form>
         </div>

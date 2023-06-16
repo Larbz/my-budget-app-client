@@ -1,9 +1,25 @@
 import axios from "axios";
-import { useAuthDispatch } from "../context/Auth";
+import { config } from "../config/config";
 import { Auth } from "../interfaces/auth";
+import { Login } from "../interfaces/login";
 import { Logout } from "../interfaces/logout";
+import { api } from "./api";
+import { LoginProps } from "../components/Form/InputComponent";
+
+const basePath = config.BACKEND_URL_AUTH;
+
+export const login = async (body:LoginProps): Promise<Login> => {
+    const options = {
+        headers: {
+            "Content-Type": "application/json",
+        },
+        withCredentials: true,
+    };
+    const response = await api.post(`${basePath}/signin`,body,options);
+    return response.data;
+};
+
 export const logout = async (): Promise<Logout> => {
-    const basePath = `${import.meta.env.VITE_BACKEND_URL_AUTH}`;
     const options = {
         headers: {
             Accept: "application/json",
@@ -11,16 +27,16 @@ export const logout = async (): Promise<Logout> => {
         },
         withCredentials: true,
     };
-    const response = await axios.post(`${basePath}/logout`, options);
+    const response = await api.post(`${basePath}/logout`, options);
     // if(response.status===200){
     //     window.localStorage.removeItem("isAuth");
     //     window.localStorage.removeItem("csrf")
     // }
+
     return response.data;
 };
 
 export const updateJWT = async (): Promise<Auth> => {
-    const path = `${import.meta.env.VITE_BACKEND_URL_AUTH}/updatejwt`;
     const options = {
         headers: {
             Accept: "application/json",
@@ -28,6 +44,6 @@ export const updateJWT = async (): Promise<Auth> => {
         },
         withCredentials: true,
     };
-    const response = await axios.post(path, {}, options);
+    const response = await axios.post(`${basePath}/updatejwt`, {}, options);
     return response.data;
 };

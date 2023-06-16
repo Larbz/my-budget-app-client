@@ -1,11 +1,9 @@
-import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { HOME } from "../config/path";
-import { AuthContext } from "../context/Auth/AuthContext";
+import { useAuth } from "../context/Auth";
 
 const PublicRoute = () => {
-    const { authState } = useContext(AuthContext);
-    const { jwt } = authState;
+    const {jwt}=useAuth()
     console.log("public");
     if (jwt) {
         return <Navigate to={HOME} />;

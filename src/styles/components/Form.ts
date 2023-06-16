@@ -25,7 +25,7 @@ export const FormTitle = styled.h3`
 export const InputLabel = styled.label`
     font-size: 1rem;
     position: absolute;
-    color: black;
+    color: #f3f3f4;
     scale: 1;
     transform: translate(15px, 7.5px);
     transition: transform 0.5s, color 0.3s;

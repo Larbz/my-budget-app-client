@@ -1,8 +1,9 @@
 import axios from "axios"
 import { Category } from "../interfaces/categories"
-
+import { config } from "../config/config"
+import { api } from "./api"
+const basePath = config.BACKEND_URL_CATEGORIES
 export const getCategories=async (token:string|null,csrf:string|null):Promise<Category[]> =>{
-    const basePath=`${import.meta.env.VITE_BACKEND_URL_CATEGORIES}`
     const options = {
         headers: {
             Accept:"application/json",
@@ -12,7 +13,7 @@ export const getCategories=async (token:string|null,csrf:string|null):Promise<Ca
         },
         withCredentials: true,
     };
-    const response = await axios.get(
+    const response = await api.get(
         `${basePath}`,
         options
     );

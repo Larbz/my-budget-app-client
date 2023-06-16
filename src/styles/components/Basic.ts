@@ -28,9 +28,13 @@ export const Main = styled.div<{ variant?: boolean }>`
     ${(props) =>
         props.variant &&
         css`
-            grid-template-columns: 220px 1fr;
+            grid-template-columns: 60px 1fr;
+
             place-content: unset;
             overflow: hidden;
+            @media screen and (min-width: 768px) {
+                grid-template-columns: 220px 1fr;
+            }
         `}
 `;
 
@@ -38,25 +42,32 @@ export const Table = styled.table`
     width: 100%;
     border-spacing: 0;
     padding-top: 0px;
-    && tr th {
-        text-align: left;
-        font-size: 1.2rem;
-    }
-    && th{
-        position: sticky;
-        top:0px;
-        background-color: #161623;
-    }
 `;
 
 export const TableRow = styled.tr`
     &:nth-child(2n) {
-        background-color: rgba(255,255,255,0.1);
+        background-color: rgba(255, 255, 255, 0.1);
     }
     font-size: 0.8rem;
 `;
 
 export const TableData = styled.td<{ center?: boolean }>`
+    text-align: left;
+    ${(props) =>
+        props.center &&
+        css`
+            text-align: center;
+            cursor: pointer;
+        `}
+`;
+
+export const TableHeader = styled.th<{center?:boolean}>`
+    text-align: left;
+    font-size: 1.2rem;
+    position: sticky;
+    top: 0px;
+    background-color: #161623;
+    padding-block: 5px;
     ${(props) =>
         props.center &&
         css`

@@ -4,37 +4,57 @@ import { useAuthDispatch } from "../../context/Auth";
 import { ActionTypes } from "../../context/Auth/AuthReducer";
 import { Button, FormTitle, LoginForm } from "../../styles/components/Form";
 import { InputComponent, LoginProps } from "./InputComponent";
+import { api } from "../../services/api";
+import { login } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
+import { HOME } from "../../config/path";
+import { useMutation } from "@tanstack/react-query";
 
 export const LoginFormComponent = () => {
     const [formulario, setFormulario] = useState<LoginProps>({} as LoginProps);
     const dispatch = useAuthDispatch();
-
-    const options = {
-        headers: {
-            "Content-Type": "application/json",
-        },
-        withCredentials: true,
-    };
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const response = await axios.post(
-            "http://localhost:3000/api/auth/signin",
-            formulario,
-            options
-        );
-        if (response) {
-            console.log(response.headers);
-        }
-        if (response.status == 200) {
-            // setAuth(response.headers.authorization,response.data.csrf);
+    const navigate = useNavigate();
+    const {mutate}=useMutation(login,{
+        onSuccess:(data)=>{
             dispatch({
                 type: ActionTypes.LOGIN,
                 payload: {
-                    jwt: response.data.Authorization,
-                    csrf: response.data.csrf,
+                    jwt: data.Authorization,
+                    csrf: data.csrf,
+                    refreshToken:data.refreshToken
                 },
             });
-        } else console.log("wrong credentials");
+            navigate(HOME)
+        },
+        onError:(data)=>{
+            console.log(data)
+        }
+        
+    });
+
+
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        // const response = await api.post(
+        //     "auth/signin",
+        //     formulario,
+        //     options
+        // );
+        // const response = await login(formulario);
+        mutate(formulario);
+        // if (isSuccess) {
+        //     console.log("Asd")
+        //     // dispatch({
+        //     //     type: ActionTypes.LOGIN,
+        //     //     payload: {
+        //     //         jwt: response.Authorization,
+        //     //         csrf: response.csrf,
+        //     //         refreshToken:response.refreshToken
+        //     //     },
+        //     // });
+        //     // navigate(HOME)
+        // } else console.log("wrong credentials");
     };
 
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i as unknown as string;

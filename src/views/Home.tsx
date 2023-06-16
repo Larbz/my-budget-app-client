@@ -16,7 +16,7 @@ export const Home = () => {
     const [img, setImg] = useState<img>();
     const [imgUrl, setImgUrl] = useState("");
     const readImage = async () => {
-        const img = await fetch("http://localhost:3000/api/images/get", {
+        const img = await fetch("http://192.168.18.3:3000/api/images/get", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json", // Specify the content type of the request body
@@ -29,7 +29,7 @@ export const Home = () => {
         setImg(data);
         console.log(data);
     };
-    const urlForServer = "http://localhost:3000/api/images";
+    const urlForServer = "http://192.168.18.3:3000/api/images";
     // const createImg = () => {
     //     const uint8Array = new Uint8Array(img?.data.data as ArrayBuffer);
 

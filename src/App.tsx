@@ -49,6 +49,7 @@ function App() {
             payload: {
                 jwt: jwt as string,
                 csrf: csrf as string,
+                
             },
         });
         setLoading(false);
@@ -59,6 +60,7 @@ function App() {
         if (!jwt) {
             navigate(LOGIN); // Redirige al usuario a la ruta de inicio de sesión
         }
+      
     }, []);
     console.log(location.pathname);
     return (
